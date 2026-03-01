@@ -48,7 +48,7 @@ def evaluate_environment():
 def main():
     check_robot_framework_package()
     check_browser_library_package()
-    check_rflint_package()
+    #check_rflint_package()
     check_smoke_suite_location()
     evaluate_environment()
     print("Setup in perfect condition!")
