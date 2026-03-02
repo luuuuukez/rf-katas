@@ -1,9 +1,42 @@
 *** Settings ***
 Library    Browser
 Resource    common.resource
+Test Setup    Open Browser To Login Page
+Test Template    Error Page Is Visible When Using Incorrect Credentials
+
+*** Test Cases ***   
+#test cases                      #username            #password
+Empty Username And Password      ${EMPTY}            ${EMPTY}  
+Invalid Username                 invalid_user        mode  
+Invalid Password                 demo                wrong_password
+Invalid Username And Password    invalid_user        wrong_password
+Special Characters               admin' OR '1'='1    mode  
 
 
-*** Test Cases ***
+*** Keywords ***
+
+Verify That Error Page Is Visible
+    Get Url    ==    ${URL}/error.html
+    Get Title    ==    Error Page
+    Get Text    h1    ==    Error Page
+
+
+Error Page Is Visible When Using Incorrect Credentials
+    [Arguments]    ${username}    ${password}
+    Enter Username    ${username}
+    Enter Password    ${password}
+    Submit Login Form
+    Verify That Error Page Is Visible  
+
+
+*** Comments ***
+
+Ex6
+/*** Settings ***
+Library    Browser
+Resource    common.resource
+
+/*** Test Cases ***
 Error Page Should Be Visible After Incorrect Login
     Open Browser To Login Page
     Enter Username    invalid_user
@@ -25,16 +58,12 @@ Empty Credentials
     Submit Login Form
     Verify That Error Page Is Visible
 
-
-*** Keywords ***
-
+/*** Keywords ***
 Verify That Error Page Is Visible
     Get Title    ==    Error Page
     Get Text    h1    ==    Error Page
 
-
-*** Comments ***
-
+----------------------
 Ex5
 /*** Variables ***
 ${URL}         http://localhost:7272
