@@ -5,7 +5,7 @@ venv/
 
 #robot
 *.html
-robot/*
+# robot/*
 *.log
 *.jpg
 *.png
