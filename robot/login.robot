@@ -54,6 +54,55 @@ Verify That Login Page Is Visible
 
 
 *** Comments ***
+
+Ex4
+/*** Test Cases ***
+Welcome Page Should Be Visible After Successful Login
+    [Teardown]    Do Successful Logout
+    Do Successful Login
+    Verify That Welcome Page Is Visible
+
+Login Form Should Be Visible After Successful Logout
+    [Setup]    Do Successful Login
+    Do Successful Logout
+    Verify That Login Page Is Visible
+
+/*** Keywords ***
+# -------------- Atomic -------------
+Open Browser To Login Page
+    New Browser    headless=${FALSE}
+    New Page       ${URL}
+
+Enter Username
+    Fill Text      id=username_field    ${USERNAME}
+
+Enter Password
+    Fill Secret    id=password_field    $PASSWORD
+
+Submit Login Form
+    Click          id=login_button
+
+# -------------- Workflow -------------
+Do Successful Login
+    Open Browser To Login Page
+    Enter Username
+    Enter Password
+    Submit Login Form
+
+Do Successful Logout
+    Click    text=Logout
+
+# ------------- Verification -------------
+Verify That Welcome Page Is visible
+    Get Text    body    contains    Welcome Page
+    Get Title    ==    Welcome Page
+
+Verify That Login Page Is Visible
+    Get Text    h1    contains    Login Page
+    Get Element States    id=login_button    contains    visible        
+
+
+
 Ex3
 
 #*** Test Cases ***

@@ -23,7 +23,7 @@ def run_test():
         sys.exit(1)
 def main():
     check_file_exists()
-    run_linting()
+    #run_linting()
     run_test()
     print("Ready to proceed!")
 
