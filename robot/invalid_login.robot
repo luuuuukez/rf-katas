@@ -1,12 +1,47 @@
 *** Settings ***
 Library    Browser
+Resource    common.resource
 
-*** Variables ***
+
+*** Test Cases ***
+Error Page Should Be Visible After Incorrect Login
+    Open Browser To Login Page
+    Enter Username    invalid_user
+    Enter Password    invalid_password
+    Submit Login Form
+    Verify That Error Page Is Visible
+
+Invalid Password
+    Open Browser To Login Page
+    Enter Username    demo
+    Enter Password    wrong
+    Submit Login Form
+    Verify That Error Page Is Visible
+
+Empty Credentials
+    Open Browser To Login Page
+    Enter Username    ${EMPTY}
+    Enter Password    ${EMPTY}
+    Submit Login Form
+    Verify That Error Page Is Visible
+
+
+*** Keywords ***
+
+Verify That Error Page Is Visible
+    Get Title    ==    Error Page
+    Get Text    h1    ==    Error Page
+
+
+*** Comments ***
+
+Ex5
+/*** Variables ***
 ${URL}         http://localhost:7272
 ${VALID_USER}     demo
 ${VALID_PASS}     mode
 
-*** Test Cases ***
+/*** Test Cases ***
 
 # 1. Valid username, invalid password
 # 2. Invalid username, valid password
@@ -22,8 +57,7 @@ Error Page Should Be Visible after Incorrect Login
     Enter Password    invalid_password
     Submit Login Form
     Verify That Error Page Is Visible
-
-*** Keywords ***
+/*** Keywords ***
 Open Browser To Login Page
     New Browser    headless=${False}
     New Page    ${URL}

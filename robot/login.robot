@@ -1,10 +1,10 @@
 *** Settings ***
 Library     Browser
+Resource    common.resource
 
 *** Variables ***
-${URL}          http://localhost:7272
-${USERNAME}     demo
-${PASSWORD}     mode
+${USERNAME}    demo
+${PASSWORD}    mode
 
 *** Test Cases ***
 Welcome Page Should Be Visible After Successful Login
@@ -18,25 +18,12 @@ Login Form Should Be Visible After Successful Logout
     Verify That Login Page Is Visible
 
 *** Keywords ***
-# -------------- Atomic -------------
-Open Browser To Login Page
-    New Browser    headless=${FALSE}
-    New Page       ${URL}
-
-Enter Username
-    Fill Text      id=username_field    ${USERNAME}
-
-Enter Password
-    Fill Secret    id=password_field    $PASSWORD
-
-Submit Login Form
-    Click          id=login_button
 
 # -------------- Workflow -------------
 Do Successful Login
     Open Browser To Login Page
-    Enter Username
-    Enter Password
+    Enter Username    ${USERNAME}
+    Enter Password    ${PASSWORD}
     Submit Login Form
 
 Do Successful Logout
